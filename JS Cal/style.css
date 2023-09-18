@@ -40,7 +40,7 @@ body {
     height: 30px;
     background-color: #fff;
     font-size: 35px;
-    padding: 20px;
+    padding: 15px;
     text-align: right;
     overflow: hidden;
     white-space: nowrap;
@@ -49,7 +49,7 @@ body {
 /* Last Calculation History */
 .history {
     background-color: #f0f0f0;
-    padding: 10px;
+    padding: 8px;
     font-size: 12px;
     text-align: right;
     height: 14px;
