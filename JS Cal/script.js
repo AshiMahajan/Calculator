@@ -2,121 +2,71 @@ document.addEventListener("DOMContentLoaded", function () {
     const buttons = document.querySelectorAll(".buttons button");
     const display = document.querySelector(".display");
     const history = document.querySelector(".history");
-    // const fullHistory = document.querySelector(".full-history");
 
-    let currentInput = "";
-    let currentOperator = "";
-    let firstValue = "";
-    let isOperatorClicked = false;
-    let isEqualsClicked = false;
+    let calculatorState = {
+        currentInput: "",
+        currentOperator: "",
+        firstValue: "",
+        isOperatorClicked: false,
+        isEqualsClicked: false,
+    };
 
-    // function updateDisplay() {
-    //     display.textContent = currentInput || "0";
-    // }
+    function updateDisplay() {
+        display.textContent = calculatorState.currentInput || "0";
+    }
 
-    // function updateHistory(addContent) {
-    //     history.textContent += addContent;
-    // }
-
-    // function addHistoryToFullHistory() {
-    //     fullHistory.textContent = `${history.textContent}\n${fullHistory.textContent}`;
-    // }
+    function updateHistory(addContent) {
+        history.textContent += addContent;
+    }
 
     function performOperation() {
+        const { currentOperator, firstValue, currentInput } = calculatorState;
+
         if (currentOperator === "+") {
-            currentInput = (
-                parseFloat(firstValue) + parseFloat(currentInput)
-            ).toString();
+            calculatorState.currentInput = (parseFloat(firstValue) + parseFloat(currentInput)).toString();
         } else if (currentOperator === "-") {
-            currentInput = (
-                parseFloat(firstValue) - parseFloat(currentInput)
-            ).toString();
+            calculatorState.currentInput = (parseFloat(firstValue) - parseFloat(currentInput)).toString();
         } else if (currentOperator === "*") {
-            currentInput = (
-                parseFloat(firstValue) * parseFloat(currentInput)
-            ).toString();
+            calculatorState.currentInput = (parseFloat(firstValue) * parseFloat(currentInput)).toString();
         } else if (currentOperator === "/") {
-            if (currentInput === "0") {
-                currentInput = "Error";
+            if (calculatorState.currentInput === "0") {
+                calculatorState.currentInput = "Error";
             } else {
-                currentInput = (
-                    parseFloat(firstValue) / parseFloat(currentInput)
-                ).toString();
+                calculatorState.currentInput = (parseFloat(firstValue) / parseFloat(currentInput)).toString();
             }
         }
-        firstValue = "";
-        isOperatorClicked = false;
-        isEqualsClicked = true;
+
+        calculatorState.firstValue = "";
+        calculatorState.isOperatorClicked = false;
+        calculatorState.isEqualsClicked = true;
         updateDisplay();
     }
 
-    function squareRoot() {
-        if (parseFloat(currentInput) >= 0) {
-            currentInput = Math.sqrt(parseFloat(currentInput)).toString();
-            updateDisplay();
-        } else {
-            currentInput = "Error";
-            updateDisplay();
+    function handleButtonClick(event, key) {
+        event.preventDefault();
+        const { currentInput, firstValue, isOperatorClicked, isEqualsClicked } = calculatorState;
+
+        if (isEqualsClicked) {
+            history.textContent = "";
         }
-    }
 
-    function square() {
-        currentInput = (parseFloat(currentInput) ** 2).toString();
-        updateDisplay();
-    }
-
-    function reciprocal() {
-        if (parseFloat(currentInput) !== 0) {
-            currentInput = (1 / parseFloat(currentInput)).toString();
+        if (key === "CE") {
+            calculatorState.currentInput = "";
             updateDisplay();
-        } else {
-            currentInput = "Error";
+        } else if (key === "C") {
+            Object.assign(calculatorState, {
+                currentInput: "",
+                firstValue: "",
+                currentOperator: "",
+                isOperatorClicked: false,
+                isEqualsClicked: false,
+            });
+            history.textContent = "";
             updateDisplay();
-        }
-    }
-
-    function percentage() {
-        currentInput = (parseFloat(currentInput) / 100).toString();
-        updateDisplay();
-    }
-
-    function buttonHighlighted(element) {
-        element.focus();
-        setTimeout(() => {
-            element.blur();
-        }, 100);
-    }
-
-    buttons.forEach((button) => {
-        button.addEventListener("click", (event, element) => {
-            event.preventDefault();
-            const key = button.getAttribute("data-key");
-
-            buttonHighlighted(button);
-
-            if (isEqualsClicked) {
-                history.textContent = "";
-            }
-
-            if (key === "CE") {
-                currentInput = "";
-                updateDisplay();
-            } else if (key === "C") {
-                currentInput = "";
-                firstValue = "";
-                currentOperator = "";
-                isOperatorClicked = false;
-                isEqualsClicked = false;
-                history.textContent = "";
-                updateDisplay();
-            } else if (key === "=") {
-                if (currentOperator) {
-                    if (!firstValue) {
-                        firstValue = currentInput;
-                    }
-                    if (!currentInput) {
-                        currentInput = firstValue;
-                    }
+        } else if (key === "=") {
+            if (calculatorState.currentOperator) {
+                if (!calculatorState.firstValue) {
+                    calculatorState.firstValue = currentInput;
                 }
                 if (!currentInput) {
                     return;
@@ -124,43 +74,54 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateHistory(`${currentInput} `);
                 performOperation();
                 updateHistory(`= ${currentInput} `);
-                addHistoryToFullHistory();
-            } else if (key === "+" || key === "-" || key === "*" || key === "/") {
-                if (isOperatorClicked && !currentInput) {
-                    return;
-                }
-                updateHistory(`${currentInput} `);
-                if (firstValue) {
-                    performOperation();
-                }
-                firstValue = currentInput;
-                currentInput = "";
-                currentOperator = key;
-                isEqualsClicked = false;
-                isOperatorClicked = true;
-                updateHistory(`${currentOperator} `);
-            } else if (key === "backspace") {
-                currentInput = currentInput.slice(0, -1);
-                updateDisplay();
-            } else if (key === "copy") {
-                navigator.clipboard.writeText(currentInput);
-            } else if (key === "pi") {
-                currentInput += Math.PI.toString();
-                updateDisplay();
-            } else if (key === "x2") {
-                square();
-            } else if (key === "sqrtx") {
-                squareRoot();
-            } else if (key === "1/x") {
-                reciprocal();
-            } else if (key === "%") {
-                percentage();
-            } else {
-                currentInput += key;
-                updateDisplay();
             }
-        });
-    });
+        } else if (["+", "-", "*", "/"].includes(key)) {
+            if (isOperatorClicked && !currentInput) {
+                return;
+            }
+            updateHistory(`${currentInput} `);
+            if (firstValue) {
+                performOperation();
+            }
+            calculatorState.firstValue = currentInput;
+            calculatorState.currentInput = "";
+            calculatorState.currentOperator = key;
+            calculatorState.isEqualsClicked = false;
+            calculatorState.isOperatorClicked = true;
+            updateHistory(`${key} `);
+        } else if (key === "backspace") {
+            calculatorState.currentInput = currentInput.slice(0, -1);
+            updateDisplay();
+        } else if (key === "copy") {
+            navigator.clipboard.writeText(currentInput);
+        } else if (key === "pi") {
+            calculatorState.currentInput += Math.PI.toString();
+            updateDisplay();
+        } else if (key === "x2") {
+            calculatorState.currentInput = (parseFloat(currentInput) ** 2).toString();
+            updateDisplay();
+        } else if (key === "sqrtx") {
+            if (parseFloat(currentInput) >= 0) {
+                calculatorState.currentInput = Math.sqrt(parseFloat(currentInput)).toString();
+            } else {
+                calculatorState.currentInput = "Error";
+            }
+            updateDisplay();
+        } else if (key === "1/x") {
+            if (parseFloat(currentInput) !== 0) {
+                calculatorState.currentInput = (1 / parseFloat(currentInput)).toString();
+            } else {
+                calculatorState.currentInput = "Error";
+            }
+            updateDisplay();
+        } else if (key === "%") {
+            calculatorState.currentInput = (parseFloat(currentInput) / 100).toString();
+            updateDisplay();
+        } else {
+            calculatorState.currentInput += key;
+            updateDisplay();
+        }
+    }
 
     function handleKeyPress(event) {
         event.preventDefault();
@@ -176,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
             "*": "*",
             "/": "/",
             ".": ".",
-            Escape: "C"
+            Escape: "C",
         };
 
         if (keyActions[key]) {
@@ -195,6 +156,13 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", (event) => {
+            const key = button.getAttribute("data-key");
+            handleButtonClick(event, key);
+        });
+    });
 
     document.addEventListener("keydown", handleKeyPress);
 });
