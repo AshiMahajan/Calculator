@@ -49,18 +49,18 @@ body {
 /* Last Calculation History */
 .history {
     background-color: #f0f0f0;
-    padding: 8px;
+    padding: 10px;
     font-size: 12px;
     text-align: right;
-    height: 14px;
+    height: 20px;
 }
 
 /* Buttons */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: 5px;
-    padding: 10px;
+    grid-gap: 4px;
+    padding: 8px;
 }
 
 button {
