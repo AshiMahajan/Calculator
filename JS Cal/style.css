@@ -6,13 +6,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     min-height: 455px;
     background-color: rgba(56, 54, 54, 0.735);
+    background-color: pink;
 }
 
 .app-calculator {
@@ -24,8 +24,8 @@ body {
 
 .calculator {
     background-color: #e0e0e0;
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #fff;
+    box-shadow: 0px 0px 15px rgb(0 0 0);
     border-radius: var(--border-radius);
     overflow: hidden;
     display: flex;
@@ -38,21 +38,29 @@ body {
 /* Display */
 .display {
     height: 30px;
-    background-color: #fff;
+    background-color: rgb(136 128 128 / 81%);
     font-size: 35px;
     padding: 15px;
     text-align: right;
+    font-family: 'Itim', cursive;
+    color: cornsilk;
     overflow: hidden;
+    letter-spacing: 2.5px;
     white-space: nowrap;
+    box-shadow: inset 0 5px 8px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.3);
 }
 
 /* Last Calculation History */
 .history {
-    background-color: #f0f0f0;
     padding: 10px;
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: 900;
     text-align: right;
     height: 20px;
+    font-family: 'Itim', cursive;
+    color: white;
+    letter-spacing: 1.7px;
+    background: rgb(92 92 92 / 58%);
 }
 
 /* Buttons */
@@ -64,18 +72,33 @@ body {
 }
 
 button {
-    font-size: 20px;
-    padding: 10px;
-    border: 1px solid #aaa;
+    font-size: 24px;
+    padding: 7px;
+    border: 1px solid #fff;
+    font-weight: 900;
     background-color: #ddd;
     cursor: pointer;
     outline: none;
     transition: background-color 0.1s ease;
-    border-radius: var(--border-radius);
+    font-family: 'Cormorant Garamond', serif;
+}
+
+#clear-entry, #clear{
+    background: #FF8A80;
+}
+#copy{
+    background-color: rgb(113, 192, 113);
+}
+
+#clear-entry:hover, #clear:hover{
+    background: #f8594b;
+}
+#copy:hover{
+    background-color: rgb(59, 182, 59);
 }
 
 button:hover {
-    background-color: #ccc;
+    background-color: rgb(255, 255, 255);
 }
 
 button:focus {
@@ -88,4 +111,27 @@ button.double-width {
 
 button.double-height {
     grid-row: span 2;
+}
+
+/*  */
+.explanations{
+    display: flex;
+    gap: 17px;
+    flex-direction: column;
+    bottom: 20px;
+    position: absolute;
+    margin-bottom: 20px;
+    font-variant: small-caps;
+}
+#meansClearEntc, #meansClearEntc{
+    background-color: #FF8A80;
+    padding: 2px;
+    border-color: black;
+    margin-right: 10px;
+    font-family: cursive;
+    border-style: solid;
+}
+#click-ce, #click-c{
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: 1.4px;
 }

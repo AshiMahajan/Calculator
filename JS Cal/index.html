@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Aboreto&family=Abril+Fatface&family=Acme&family=Amatic+SC&family=Bricolage+Grotesque&family=Cairo+Play&family=Cedarville+Cursive&family=Chakra+Petch:ital,wght@1,300&family=Comic+Neue:wght@300&family=Cormorant+Garamond:wght@700&family=Courgette&family=Fuggles&family=Gamja+Flower&family=Inconsolata:wght@300&family=Itim&family=Kalam&family=Kavoon&family=Lilita+One&family=Long+Cang&family=Lora&family=Nanum+Myeongjo:wght@800&family=Neucha&family=Oldenburg&family=Playball&family=Rampart+One&family=Roboto+Slab:wght@500&family=Russo+One&family=Signika+Negative:wght@500&family=Skranji&family=Tilt+Neon&family=Vibur&family=Yellowtail&display=swap"
+      rel="stylesheet"
+    />
     <title>Computational Tool</title>
     <script src="script.js"></script>
   </head>
@@ -14,11 +20,16 @@
         <div class="history"></div>
 
         <div class="buttons">
-          <button data-key="CE">CE</button>
-          <button data-key="copy">copy</button>
+          <button id="clear-entry" data-key="CE">CE</button>
+          <button id="copy" data-key="copy">copy</button>
           <button data-key="pi">π</button>
-          <button data-key="backspace">&#9003;</button>
-          <button data-key="C">C</button>
+          <button data-key="backspace">
+            <img
+              src="Images/Back.png"
+              style="width: 29%; vertical-align: sub"
+            />
+          </button>
+          <button id="clear" data-key="C">AC</button>
           <button data-key="1/x">1/x</button>
           <button data-key="x2">x²</button>
           <button data-key="sqrtx">√x</button>
@@ -40,6 +51,14 @@
           <button data-key="0" class="double-width">0</button>
           <button data-key=".">.</button>
         </div>
+      </div>
+    </div>
+    <div class="explanations">
+      <div id="click-ce">
+        <span id="meansClearEntc">CE</span>: Clear Entry, remove last input.
+      </div>
+      <div id="click-c">
+        <span id="meansClearEntc">AC</span>: Clear All, reset calculator.
       </div>
     </div>
   </body>
