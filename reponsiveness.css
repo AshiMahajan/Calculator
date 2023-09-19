@@ -89,7 +89,7 @@
     .display {
         height: 66px;
         background-color: rgb(136 128 128 / 81%);
-        font-size: 30px;
+        font-size: 29px;
         padding: 12px;
         text-align: right;
         font-family: 'Itim', cursive;
@@ -104,6 +104,11 @@
     }
     .calculator{
         width: 350px;
+    }
+    .history {
+        padding: 9px;
+        font-size: 13px;
+        height: 10px;
     }
 }
 @media (max-width: 376px){
