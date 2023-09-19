@@ -9,7 +9,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     min-height: 455px;
     background-color: rgba(56, 54, 54, 0.735);
     background-color: pink;
